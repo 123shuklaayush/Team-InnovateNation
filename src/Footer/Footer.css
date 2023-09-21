@@ -1,0 +1,17 @@
+.foots{
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #0c0c0c;
+    color: white;
+    text-align: center;
+    padding-top: 40px;
+}
+.heading{
+    margin-top: 5px;
+}
+.footer-image{
+    margin-right: 90px;
+    align-items: center;
+    padding: 40px 10px;
+}
