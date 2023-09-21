@@ -17,25 +17,26 @@ const rows = [
     '0a3b281a991',
     '16 Mar, 2019',
     'Elvis Presley',
-    
   ),
   createData(
     '00b12900ch8',
     '16 Mar, 2019',
     'Paul McCartney',
   ),
-  createData('b803cal91181', '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    'b803cal91181',
+    '16 Mar, 2019',
+    'Tom Scholz',
+  ),
   createData(
     '1b8c9052885c',
     '16 Mar, 2019',
     'Michael Jackson',
-    
   ),
   createData(
     '1c982541b89c',
     '15 Mar, 2019',
     'Bruce Springsteen',
-    
   ),
 ];
 
@@ -44,24 +45,48 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
+  const rowStyle = {
+    cursor: 'pointer', // Make the cursor a pointer
+    height: '3rem',    // Increase the row height
+    transition: 'background-color 0.3s', // Add a smooth transition for background color
+  };
+
+  const cellStyle = {
+    fontSize: '1rem',  // Optionally, you can adjust the font size of the cells
+  };
+
+  // Define a function to handle the hover effect
+  const handleRowHover = (event) => {
+    event.currentTarget.style.backgroundColor = 'lightSkyBlue';
+  };
+
+  // Define a function to handle removing the hover effect
+  const handleRowHoverExit = (event) => {
+    event.currentTarget.style.backgroundColor = ''; // Revert to the default background color
+  };
+
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>ID_No</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell style={cellStyle}>ID_No</TableCell>
+            <TableCell style={cellStyle}>Date</TableCell>
+            <TableCell style={cellStyle}>Name</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              
+            <TableRow
+              key={row.id}
+              style={rowStyle}
+              onMouseEnter={handleRowHover}
+              onMouseLeave={handleRowHoverExit}
+            >
+              <TableCell style={cellStyle}>{row.id}</TableCell>
+              <TableCell style={cellStyle}>{row.date}</TableCell>
+              <TableCell style={cellStyle}>{row.name}</TableCell>
             </TableRow>
           ))}
         </TableBody>
