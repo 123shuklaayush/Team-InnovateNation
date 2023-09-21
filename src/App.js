@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import SignIn from './Sign-In/SignIn';
-import Admin from './Admin/Admin';
+
 import Dashboard from './Admin/Dashboard';
 function App() {
   return (
