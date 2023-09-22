@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to get the ID from the URL
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import axios from 'axios';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -17,51 +18,74 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 const UserDetails = (props) => {
-  const { id } = useParams(); // Get the ID from the URL
-  const { rows } = props; // Access the rows data through props
-
-  // Find the data for the clicked ID
+  const { id } = useParams();
+  const { rows } = props;
   const rowData = rows.find((row) => row.id === id);
 
-  // State to store the selected file name
   const [selectedFileName, setSelectedFileName] = useState('');
-
-  // State to track if upload was successful
   const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  // State to track if a PDF file is selected
   const [isPDFSelected, setIsPDFSelected] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [pdfData, setPdfData] = useState([]); // State to store retrieved PDF data
 
-  // Function to handle file input change
+  useEffect(() => {
+    // Make an Axios GET request to retrieve PDF data from the backend server
+    axios.get('http://localhost:5000/get-pdfs') // Update the URL to include the backend server's URL and port
+      .then((response) => {
+        if (response.status === 200) {
+          setPdfData(response.data);
+        } else {
+          console.error('Error fetching PDF data. Status:', response.status);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching PDF data:', error);
+      });
+  }, []);
+  // The empty dependency array ensures this runs once when the component mounts
+
   const handleFileInputChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setSelectedFileName(selectedFile.name);
-      // Check if the file has a PDF extension
-      if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
+      if (file.name.toLowerCase().endsWith('.pdf')) {
         setIsPDFSelected(true);
       } else {
         setIsPDFSelected(false);
       }
     } else {
-      setSelectedFileName(''); // Clear the selected file name if no file is selected
+      setSelectedFile(null);
+      setSelectedFileName('');
       setIsPDFSelected(false);
     }
   };
 
-  // Function to handle the "Upload" button click
   const handleUploadClick = () => {
-    // Check if a PDF file is selected
-    if (isPDFSelected) {
-      // Simulate a successful upload after a brief delay (you can replace this with your actual upload logic)
-      setTimeout(() => {
+  if (isPDFSelected) {
+    const formData = new FormData();
+    formData.append('pdf', selectedFile); // Use the selectedFile from state
+
+    axios.post('http://localhost:5000/upload-pdf', formData, { // Update the URL to include the backend server's URL and port
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
         setUploadSuccess(true);
-      }, 1000);
-    } else {
-      // Show an error message or take appropriate action if a non-PDF file is selected
-      console.error('Please select a PDF file for upload.');
-    }
-  };
+      } else {
+        console.error('Error uploading file to the server. Status:', response.status);
+      }
+    })
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+    });
+  } else {
+    console.error('Please select a PDF file for upload.');
+  }
+};
+
 
   return (
     <div>
@@ -72,7 +96,7 @@ const UserDetails = (props) => {
         Upload file
         <VisuallyHiddenInput
           type="file"
-          onChange={handleFileInputChange} // Handle file input change
+          onChange={handleFileInputChange}
         />
       </Button>
       {selectedFileName && (
@@ -88,6 +112,16 @@ const UserDetails = (props) => {
         {uploadSuccess && (
           <p style={{ color: 'green' }}>Upload successfully</p>
         )}
+      </div>
+
+      <div>
+        {pdfData.map((pdf) => (
+          <div key={pdf._id}>
+            <p>PDF Filename: {pdf.filename}</p>
+            <p>Original Filename: {pdf.originalname}</p>
+            {/* Add more fields to display as needed */}
+          </div>
+        ))}
       </div>
     </div>
   );
