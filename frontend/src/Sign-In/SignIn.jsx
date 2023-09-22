@@ -30,7 +30,13 @@ function SignIn() {
       setIsAuthenticated(true);
       // Use navigate to go to the 'Admin' route upon successful authentication
       navigate('/admin'); // Specify the route you want to navigate to
-    } else {
+    } 
+    else if (email === 'clientid' && password === 'password') {
+      setIsAuthenticated(true);
+      // Use navigate to go to the 'Admin' route upon successful authentication
+      navigate('/client'); // Specify the route you want to navigate to
+    } 
+    else {
       alert('Authentication failed. Please check your credentials.');
     }
   };
@@ -61,7 +67,7 @@ function SignIn() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="User ID"
                 name="email"
                 autoComplete="email"
                 autoFocus

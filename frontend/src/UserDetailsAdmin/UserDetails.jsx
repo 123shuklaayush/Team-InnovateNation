@@ -1,48 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from 'axios';
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
+const UserDetailsContainer = styled('div')({
+  maxWidth: '600px',
+  margin: '0 auto',
+  padding: '20px',
+  backgroundColor: '#f5f5f5',
+  borderRadius: '5px',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  textAlign: 'center',
 });
 
-const UserDetails = (props) => {
+const UserDetailsHeader = styled('h2')({
+  color: '#333',
+});
+
+const UserDetailsText = styled('p')({
+  margin: '5px 0',
+});
+
+const UploadButton = styled(Button)({
+  marginTop: '10px',
+});
+
+const SuccessMessage = styled('p')({
+  color: 'green',
+  marginTop: '10px',
+});
+
+const UserDetails = () => {
   const { id } = useParams();
-  const { rows } = props;
-  const rowData = rows.find((row) => row.id === id);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const name = queryParams.get('name');
+  const date = queryParams.get('date');
+  const nextDate = queryParams.get('nextDate');
+  const lawyer = queryParams.get('lawyer');
+  const judge = queryParams.get('judge');
 
   const [selectedFileName, setSelectedFileName] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isPDFSelected, setIsPDFSelected] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [pdfData, setPdfData] = useState([]); // State to store retrieved PDF data
-
-  useEffect(() => {
-    // Make an Axios GET request to retrieve PDF data from the backend server
-    axios.get('http://localhost:5000/get-pdfs') // Update the URL to include the backend server's URL and port
-      .then((response) => {
-        if (response.status === 200) {
-          setPdfData(response.data);
-        } else {
-          console.error('Error fetching PDF data. Status:', response.status);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching PDF data:', error);
-      });
-  }, []);
-  // The empty dependency array ensures this runs once when the component mounts
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -62,45 +66,49 @@ const UserDetails = (props) => {
   };
 
   const handleUploadClick = () => {
-  if (isPDFSelected) {
-    const formData = new FormData();
-    formData.append('pdf', selectedFile); // Use the selectedFile from state
+    if (isPDFSelected) {
+      const formData = new FormData();
+      formData.append('pdf', selectedFile);
 
-    axios.post('http://localhost:5000/upload-pdf', formData, { // Update the URL to include the backend server's URL and port
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        setUploadSuccess(true);
-      } else {
-        console.error('Error uploading file to the server. Status:', response.status);
-      }
-    })
-    .catch((error) => {
-      console.error('Error uploading file:', error);
-    });
-  } else {
-    console.error('Please select a PDF file for upload.');
-  }
-};
-
+      axios.post('http://localhost:5000/upload-pdf', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setUploadSuccess(true);
+          } else {
+            console.error('Error uploading file to the server. Status:', response.status);
+          }
+        })
+        .catch((error) => {
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      console.error('Please select a PDF file for upload.');
+    }
+  };
 
   return (
-    <div>
-      <h1>ID_No: {rowData.id}</h1>
-      <p>Name: {rowData.name}</p>
-      <p>Date: {rowData.date}</p>
-      <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-        Upload file
-        <VisuallyHiddenInput
+    <UserDetailsContainer>
+      <UserDetailsHeader>Case ID: {id}</UserDetailsHeader>
+      <UserDetailsText>Name: {name}</UserDetailsText>
+      <UserDetailsText>Starting Date: {date}</UserDetailsText>
+      <UserDetailsText>Next Hearing Date: {nextDate}</UserDetailsText>
+      <UserDetailsText>Lawyer: {lawyer}</UserDetailsText>
+      <UserDetailsText>Judge: {judge}</UserDetailsText>
+      
+      <UploadButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+        Upload File
+        <input
           type="file"
           onChange={handleFileInputChange}
+          style={{ display: 'none' }}
         />
-      </Button>
+      </UploadButton>
       {selectedFileName && (
-        <p>Selected File: {selectedFileName}</p>
+        <UserDetailsText>Selected File: {selectedFileName}</UserDetailsText>
       )}
 
       <div style={{ marginTop: '10px' }}>
@@ -110,20 +118,16 @@ const UserDetails = (props) => {
           </Button>
         )}
         {uploadSuccess && (
-          <p style={{ color: 'green' }}>Upload successfully</p>
+          <SuccessMessage>Upload Successful</SuccessMessage>
         )}
       </div>
 
-      <div>
-        {pdfData.map((pdf) => (
-          <div key={pdf._id}>
-            <p>PDF Filename: {pdf.filename}</p>
-            <p>Original Filename: {pdf.originalname}</p>
-            {/* Add more fields to display as needed */}
-          </div>
-        ))}
-      </div>
-    </div>
+      <Link to={`/upload-details/${id}`} style={{ marginTop: '10px', display: 'block' }}>
+        <Button variant="contained" color="primary">
+          View Upload Details
+        </Button>
+      </Link>
+    </UserDetailsContainer>
   );
 };
 

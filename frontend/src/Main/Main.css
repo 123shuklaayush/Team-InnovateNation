@@ -1,3 +1,7 @@
 .maincontainer{
     height: 200vh;
+    line-height: 45px;
+}
+section h3{
+    text-align: center;
 }

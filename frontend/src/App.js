@@ -5,8 +5,9 @@ import Home from './Home/Home';
 import SignIn from './Sign-In/SignIn';
 import UserDetails from './UserDetailsAdmin/UserDetails';
 import Dashboard from './Admin/Dashboard';
-
-
+import UploadDetails from './Admin/PdfDetails/UploadDetails';
+import Client from './Client/Client';
+import ClientDocuments from './Client/ClientDocuments';
 function createData(id, date, name) {
   return { id, date, name };
 }
@@ -50,6 +51,10 @@ function App() {
           <Route path="/admin" element={<Dashboard />} />
           {/* Pass rows as a prop to the Orders component */}
           <Route path="/details/:id" element={<UserDetails rows={rows} />} />
+          {/* Add route for UploadDetails */}
+          <Route path="/upload-details/:id" element={<UploadDetails />} />
+          <Route path="/client" element={<Client />} />
+          <Route path="/client-documents" element={<ClientDocuments />} />
         </Routes>
       </div>
     </Router>
