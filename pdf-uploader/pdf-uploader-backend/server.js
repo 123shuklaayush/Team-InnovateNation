@@ -61,6 +61,18 @@ app.get('/get-pdfs', async (req, res) => {
   }
 });
 
+app.delete('/delete-pdf/:pdfId', async (req, res) => {
+  try {
+    const pdfId = req.params.pdfId;
+    // Use Mongoose to find and remove the PDF by its ID
+    await Pdf.findByIdAndRemove(pdfId);
+    res.status(200).send('PDF deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting PDF:', error);
+    res.status(500).send('Error deleting PDF.');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

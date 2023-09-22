@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import moment from 'moment';
 
 const UploadDetails = () => {
   const { id } = useParams();
@@ -54,6 +55,22 @@ const UploadDetails = () => {
     });
   };
 
+  const handleDeletePDF = (pdfId) => {
+    // Make a DELETE request to your backend to delete the PDF record
+    axios.delete(`http://localhost:5000/delete-pdf/${pdfId}`)
+      .then((response) => {
+        if (response.status === 200) {
+          // Remove the deleted PDF from the local state
+          setPdfData(pdfData.filter(pdf => pdf._id !== pdfId));
+        } else {
+          console.error('Error deleting PDF. Status:', response.status);
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting PDF:', error);
+      });
+  };
+
   return (
     <div>
       <Typography variant="h4" gutterBottom style={{ textAlign: 'center', marginBottom: '20px' }}>
@@ -64,6 +81,7 @@ const UploadDetails = () => {
           <TableHead>
             <TableRow>
               <TableCell>PDF Filename</TableCell>
+              <TableCell>Upload Date and Time</TableCell>
               <TableCell>Download Entire PDF</TableCell>
               <TableCell>View Summarised PDF</TableCell>
               <TableCell>Delete PDF</TableCell>
@@ -74,7 +92,10 @@ const UploadDetails = () => {
               <TableRow key={pdf._id}>
                 <TableCell>{pdf.filename}</TableCell>
                 <TableCell>
-                  <Button style={{backgroundColor:"#01a7e9", color:"white"}}
+                  {moment(pdf.createdAt).format('MMMM DD, YYYY HH:mm:ss')}
+                </TableCell>
+                <TableCell>
+                  <Button style={{ backgroundColor: "#01a7e9", color: "white" }}
                     variant="outlined"
                     color="primary"
                     onClick={() => handleDownloadPDF(pdf.filename)}
@@ -83,22 +104,21 @@ const UploadDetails = () => {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button style={{backgroundColor: "green", color: "white"}}
+                  <Button style={{ backgroundColor: "green", color: "white" }}
                     variant="outlined"
                     color="primary"
-                    onClick={() => handleDownloadPDF(pdf.filename)
-                    }
+                    onClick={() => handleDownloadPDF(pdf.filename)}
                   >
                     Download
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button style={{backgroundColor: "#f2483a", color: "white"}}
+                  <Button style={{ backgroundColor: "#f2483a", color: "white" }}
                     variant="outlined"
                     color="primary"
-                    onClick={() => handleDownloadPDF(pdf.filename)}
+                    onClick={() => handleDeletePDF(pdf._id)}
                   >
-                    Delete 
+                    Delete
                   </Button>
                 </TableCell>
               </TableRow>

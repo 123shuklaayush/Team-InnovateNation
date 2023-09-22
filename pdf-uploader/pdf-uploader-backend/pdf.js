@@ -6,8 +6,9 @@ const pdfSchema = new mongoose.Schema({
   path: String,
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now, // Default value is the current date and time
   },
 });
+
 
 module.exports = mongoose.model('Pdf', pdfSchema);
