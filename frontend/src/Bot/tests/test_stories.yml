@@ -1,0 +1,156 @@
+ #### This file contains tests to evaluate that your bot behaves as expected.
+ #### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+ test_stories:
+ - story: happy path 1
+   steps:
+   - user: |
+       hello there!
+     intent: greet
+   - action: utter_greet
+   - user: |
+       amazing
+     intent: mood_great
+   - action: utter_happy
+
+ - story: happy path 2
+   steps:
+   - user: |
+       hello there!
+     intent: greet
+   - action: utter_greet
+   - user: |
+       amazing
+     intent: mood_great
+   - action: utter_happy
+   - user: |
+       bye-bye!
+     intent: goodbye
+   - action: utter_goodbye
+
+ - story: sad path 1
+   steps:
+   - user: |
+       hello
+     intent: greet
+   - action: utter_greet
+   - user: |
+       not good
+     intent: mood_unhappy
+   - action: utter_cheer_up
+   - action: utter_did_that_help
+   - user: |
+       yes
+     intent: affirm
+   - action: utter_happy
+
+ - story: sad path 2
+   steps:
+   - user: |
+       hello
+     intent: greet
+   - action: utter_greet
+   - user: |
+       not good
+     intent: mood_unhappy
+   - action: utter_cheer_up
+   - action: utter_did_that_help
+   - user: |
+       not really
+     intent: deny
+   - action: utter_goodbye
+
+ - story: sad path 3
+   steps:
+   - user: |
+       hi
+     intent: greet
+   - action: utter_greet
+   - user: |
+       very terrible
+     intent: mood_unhappy
+   - action: utter_cheer_up
+   - action: utter_did_that_help
+   - user: |
+       no
+     intent: deny
+   - action: utter_goodbye
+
+ - story: say goodbye
+   steps:
+   - user: |
+       bye-bye!
+     intent: goodbye
+   - action: utter_goodbye
+
+ - story: bot challenge
+   steps:
+   - user: |
+       are you a bot?
+     intent: bot_challenge
+   - action: utter_iamabot
+
+ - story: happy path - agent callback
+   steps:
+     - user: |
+         Hi there! Can you schedule a callback for me?
+       intent: Live_Demo
+     - action: action_live_demo
+     - user: |
+         Yes, please schedule a callback.
+       intent: affirm
+     - action: callback_from_requested
+     - action: action_show_callback_form
+
+ - story: sad path - agent callback
+   steps:
+     - user: |
+          Hi there! Can you schedule a callback for me?
+       intent: Live_Demo
+     - action: action_live_demo
+     - user: |
+         Actually, never mind. I don't need a callback anymore.
+       intent: deny
+     - action: utter_goodbye
+
+ - story: happy path - appointment
+   steps:
+    - user: |
+        Hi, I'd like to schedule an appointment.
+      intent: Live_Demo
+    - action: action_live_demo
+    - user: |
+        Tomorrow would be great.
+      intent: affirm
+    - intent: appointment_from_requested
+    - action: action_show_appointment_form
+
+ - story: sad path - appointment
+   steps:
+    - user: |
+         Hi, I'd like to schedule an appointment.
+      intent:  Live_Demo
+    - action: action_live_demo
+    - user: |
+        Actually, never mind. I'll reschedule later.
+      intent: deny
+    - action: utter_goodbye
+
+ - story: happy path - agent handover
+   steps:
+    - user: |
+        Hi, can you connect me to a human agent?
+      intent:  agent_handover_form_requested
+    - action: action_show_agent_handover_form
+
+ - story: sad path - agent handover
+   steps:
+    - user: |
+          Hi, can you connect me to a human agent?
+      intent:  agent_handover_form_requested
+    - action: action_show_agent_handover_form
+    - user: |
+          Okay, I'll just try again later.
+      intent: goodbye
+    - action: utter_goodbye
+

@@ -1,0 +1,58 @@
+version: "3.1"
+nlu:
+- intent: what_is/About
+  examples: |
+    - What is a Law Guide?
+    - Can you provide information about Law Guides?
+    - Tell me about the purpose of a Law Guide.
+    - What is the function of a Law Guide?
+    - Explain the concept of a Law Guide.
+    - What does a Law Guide typically contain?
+    - Why might someone need a Law Guide?
+    - How can a Law Guide be helpful?
+    - Could you describe the importance of a Law Guide?
+    - Give me an overview of what a Law Guide is.
+    - Tell me about Law Guide
+    - Law Guide ?
+- intent: what_is/use_of_bot
+  examples: |
+    - How can a Law Guide Bot be utilized?
+    - What purposes does a Law Guide Bot serve?
+    - What is the practical application of a Law Guide Bot?
+    - What can you do with a Law Guide Bot?
+    - How does a Law Guide Bot assist users?
+    - In what ways is a Law Guide Bot helpful?
+    - What are the functions of a Law Guide Bot?
+    - How do people make use of a Law Guide Bot?
+    - What are the benefits of using a Law Guide Bot?
+    - What's the role of a Law Guide Bot in legal matters?
+    - What is use of Law Guide Bot
+    - Bot
+    - Law Guide Bot
+- intent: what_is/About_Articles
+  examples: |
+    - How can I discover categories of legal articles and cases?
+    - What's the method for finding legal article and case categories?
+    - How do I access categorized legal articles and cases?
+    - Where can I get information on legal article and case classifications?
+    - What's the way to learn about the categories of legal articles and cases?
+    - How can I explore legal article and case topics?
+    - Where should I look to find categories for legal articles and cases?
+    - What's the process for identifying legal article and case classifications?
+    - How do I become aware of the categories of legal articles and cases?
+    - What resources can help me find legal article and case categories?
+    - How to know about Articles and Case categories
+    - Articles and Case categories ?
+- intent: what_is/LLM_AGENT
+  examples: |
+    - Can you activate the  agent?
+    - How do I trigger the  agent?
+    - Start the  agent, please.
+    - Initiate the agent.
+    - Launch the agent.
+    - Commence the  agent.
+    - Get the  agent running.
+    - Begin the  agent.
+    - Fire up the agent.
+    - Enable the  agent.
+

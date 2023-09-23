@@ -1,0 +1,69 @@
+image: docker #The GitLab runner will create a Docker container for each job and execute the script within this container.
+#As we want to use Docker Compose to build, deploy. SO the image used by Gitlab runner should have docker compose already installed.
+# Hence the usage of the image "docker/compose"
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+# multi stage CI-CD pipe line for build, test and deployment of RASA BOT
+stages:
+  - build # CI-CD stage for building and publishing docker images.
+  - deploy # CI-CD stage for deploying "dev" tagged docker images.
+
+build-bot-and-action-server: # name of the job to build docker image for RASA BOT and ACTION Server
+  stage: build
+  tags:
+    - bot-runner
+  script:
+    - echo "This stage builds the docker images for BOT and ActionServer services defined in docker-compose.yml file"
+    - docker-compose build # Builds Docker images for all the images configured in the docker-compose.yml file
+    - docker-compose push #Pushes built images into the container registry.
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature.*$/
+      when: manual
+    - if: $CI_COMMIT_BRANCH =~ /^bug.*$/
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "development"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "staging"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
+
+deploy-to-smg: #name of the job to deploy RASA BOT and ACTION Server images to Staging Server
+  stage: deploy
+  image:
+    name: alpine/helm:3.11.2
+    entrypoint: [""]
+  tags:
+    - docker
+  variables:
+    CI_PROJECT_ID: 44668137
+    REPO: guidizy-k8s-helmcharts
+    CHART: helm-rasa
+    KUBECONFIG: $k8sAccessDev_Staging
+  before_script:
+    - chmod 600 $k8sAccessDev_Staging
+    - apk add git
+    - helm plugin install --version=v0.10.3 https://github.com/chartmuseum/helm-push.git
+    - curl --location "https://gitlab.com/api/v4/projects/29806556/repository/files/app-guidizy-bot-k8s%2Fsmg%2Fvalues.app-guidizy-bot-smg-env.yaml/raw?ref=main" --header "PRIVATE-TOKEN:$GIT_PAT_FOR_CIYML" -o values.app-guidizy-bot-smg-env.yaml
+  script:
+    # Add the stable helm chart repository given by GitLab. The chart repository follows the following URL structure
+    - >
+      helm repo add ${REPO}
+      --username ${CI_REGISTRY_USER}
+      --password ${CI_REGISTRY_PASSWORD}
+      ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable
+    # Install (if not already exist) / Upgrade ( if already exist) the Chart along with their custom values with specified name space
+    # into K8S cluster
+    - helm upgrade -i guidizy-bot ${REPO}/${CHART} -f values.app-guidizy-bot-smg-env.yaml -n smg-app
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature.*$/
+      when: manual
+    - if: $CI_COMMIT_BRANCH =~ /^bug.*$/
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "development"
+      when: always

@@ -1,0 +1,9 @@
+docker-compose.env
+docker-compose.yml
+Dockerfile
+.rasa/*
+rasa-env/*
+models/*
+story_graph.dot
+.dockerignore
+.gitignore

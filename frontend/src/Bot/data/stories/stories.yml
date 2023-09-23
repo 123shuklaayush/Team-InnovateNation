@@ -1,0 +1,14 @@
+version: "3.1"
+
+stories:
+  - story: Initial path
+    steps:
+      - intent: greet
+      - action: action_initial_options
+
+
+
+  - story: Main Menu after response
+    steps:
+      - intent: show_main_menu_button
+      - action: action_initial_options

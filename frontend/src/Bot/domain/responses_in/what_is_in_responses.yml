@@ -1,0 +1,45 @@
+version: "3.1"
+responses:
+   utter_what_is_in/About:
+     - text: |
+         **Law Guide** आपकी भरोसेमंद ऑनलाइन स्रोत है जोकि कानूनी सहायता के लिए है। 
+         हमारी वेबसाइट क्लाइंट्स को उनके मामलों के बारे में मूल्यवान जानकारी प्रदान करती है, 
+         जिसमें उनके मामले की आगामी सुनवाईयों और उनके कानूनी मामलों की वर्तमान प्रगति की जानकारी शामिल है।
+         
+
+       buttons:
+         - payload: /show_main_menu_button_in
+           title: "मुख्य मेनू"
+   utter_what_is_in/use_of_bot:
+     - text: |
+          हमारे उपयोगकर्ता-सहायक इंटरफ़ेस के साथ, क्लाइंट्स आसानी से नेविगेट कर सकते हैं और उनकी आवश्यकताओं के लिए मामले श्रेणियों और लेखों को खोज सकते हैं, 
+          जो उन्हें सही कानूनी कदमों के बारे में महत्वपूर्ण मार्गदर्शन प्रदान करते हैं।
+
+       buttons:
+         - payload: /show_main_menu_button_in
+           title: "मुख्य मेनू"
+   utter_what_is_in/About_Articles:
+     - text: |
+         कृपया नीचे दिए गए विकल्प में से चुनें
+       buttons:
+         - payload: /trigger_response_selector{"retrieval_intent":"what_is_in/LLM_AGENT"}
+           title: "वर्चुअल एजेंट"
+         - payload: /show_main_menu_button_in
+           title: "मुख्य मेनू"
+   utter_what_is_in/Customer Care:
+     - text: |
+          अधिक जानकारी के लिए, आप हमें +91 786-594-3323 पर कॉल कर सकते हैं या हमें lawguide@govt.com पर लिख सकते हैं
+         
+          
+          या आप हमसे हमारे WhatsApp पर "+91 6281-733-899" के माध्यम से संपर्क कर सकते हैं।
+       buttons:
+         - payload: /show_main_menu_button_in
+           title: "मुख्य मेनू"
+   utter_what_is_in/LLM_AGENT:
+     - text: |
+            कृपया हमारे एजेंट से संपर्क करने के लिए नीचे दिए गए लिंक पर क्लिक करें
+            यूआरएल: "http://localhost:8501"
+
+       buttons:
+         - payload: /show_main_menu_button_in
+           title: "Main Menu"

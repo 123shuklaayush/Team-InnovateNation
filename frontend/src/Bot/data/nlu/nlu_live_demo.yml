@@ -1,0 +1,66 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hello there
+      - good morning
+      - good evening
+      - moin
+      - hey there
+      - let's go
+      - hey dude
+      - goodmorning
+      - goodevening
+      - good afternoon
+
+  - intent: goodbye
+    examples: |
+      - cu
+      - good by
+      - cee you later
+      - good night
+      - bye
+      - goodbye
+      - have a nice day
+      - see you around
+      - bye bye
+      - see you later
+
+  - intent: affirm
+    examples: |
+      - [yes]{"entity": "affirm_deny"}
+      - [y]{"entity": "affirm_deny"}
+      - [indeed]{"entity": "affirm_deny"}
+      - [of course]{"entity": "affirm_deny"}
+      - that sounds good
+      - correct
+
+  - intent: what_is/Customer Care
+    examples: |
+      - I want to do a Customer Care
+      - I wanna test it Customer Care
+      - Allow me to have a Customer Care
+      - Customer Care
+
+
+  - intent: deny
+    examples: |
+      - [no]{"entity": "affirm_deny"}
+      - [n]{"entity": "affirm_deny"}
+      - [never]{"entity": "affirm_deny"}
+      - I don't think so
+      - don't like that
+      - [no way]{"entity": "affirm_deny"}
+      - [not really]{"entity": "affirm_deny"}
+
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you a human?
+      - am I talking to a bot?
+      - am I talking to a human?
+

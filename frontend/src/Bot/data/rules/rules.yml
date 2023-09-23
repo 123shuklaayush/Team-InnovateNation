@@ -1,0 +1,26 @@
+version: "3.1"
+
+rules:
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+  - rule: Respond to Common kind of Questions
+    steps:
+      - intent: what_is
+      - action: utter_what_is
+
+  - rule: Implementation of the Two-Stage-Fallback
+    steps:
+      - intent: nlu_fallback
+      - action: action_two_stage_fallback
+      - active_loop: action_two_stage_fallback
+
+  - rule: Trigger response selector from button payload
+    steps:
+      - intent: trigger_response_selector
+      - action: action_trigger_response_selector

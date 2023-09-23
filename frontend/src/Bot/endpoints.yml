@@ -1,0 +1,61 @@
+# This file contains the different endpoints your bot can use.
+
+# Server where the models are pulled from.
+# https://rasa.com/docs/rasa/model-storage#fetching-models-from-a-server
+
+#models:
+#  url: http://my-server.com/models/default_core@latest
+#  wait_time_between_pulls:  10   # [optional](default: 100)
+
+# Server which runs your custom actions.
+# https://rasa.com/docs/rasa/custom-actions
+
+action_endpoint:
+   url: "http://localhost:5055/webhook"
+#  url: "http://action_server:5055/webhook"
+
+# Tracker store which is used to store the conversations.
+# By default the conversations are stored in memory.
+# https://rasa.com/docs/rasa/tracker-stores
+
+#tracker_store:
+#    type: redis
+#    url: <host of the redis instance, e.g. localhost>
+#    port: <port of your redis instance, usually 6379>
+#    db: <number of your database within redis, e.g. 0>
+#    password: <password used for authentication>
+#    use_ssl: <whether or not the communication is encrypted, default false>
+
+#tracker_store:
+#  type: myTracker.MongoTrackerStore
+#  # url: mongodb+srv://trackerstore.8xy5ejw.mongodb.net
+#  url: mongodb+srv://mongodb-5d39a1d0-o2bfbbbdf.database.cloud.ovh.net
+#  db: admin
+#  username: admin
+#  password: k012ClqQMT8RX6hBVPIK
+
+# tracker_store:
+#   type: mongod
+#   url: mongodb://mongo:27017
+#   db: rasa
+#   username: rasatrackerstore
+#   password: rasatrackerstore
+
+#url: mysql-f3b3ff94-o2bfbbbdf.database.cloud.ovh.net:20184
+# tracker_store:
+#   type: SQL
+#   dialect: "mysql+pymysql"  # the dialect used to interact with the db
+#   url: mysql-f3b3ff94-o2bfbbbdf.database.cloud.ovh.net
+#   port: 20184
+#   username: avnadmin
+#   password: A3BgUX65RuQwpEo0Iid9
+#   db: guidizy
+
+# Event broker which all conversation events should be streamed to.
+# https://rasa.com/docs/rasa/event-brokers
+
+#event_broker:
+#  url: localhost
+#  username: username
+#  password: password
+#  queue: queue

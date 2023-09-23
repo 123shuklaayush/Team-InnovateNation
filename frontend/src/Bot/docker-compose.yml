@@ -1,0 +1,25 @@
+version: "3"
+services:
+  rasa:
+    container_name: "rasa_server"
+    image: registry.gitlab.com/guidizy/v1/smg-bot/rasa:latest
+    user: root
+    build:
+      context: .
+    volumes:
+      - ./:/guidizy
+    ports:
+      - "5005:5005"
+  action_server:
+    container_name: "action_server"
+    image: registry.gitlab.com/guidizy/v1/smg-bot/action_server:latest
+    build:
+      context: actions
+    ports:
+      - 5055:5055
+  # duckling:
+  #   restart: always
+  #   image: "rasa/duckling:latest"
+  #   ports:
+  #     - "8000:8000"
+  #   command: ["duckling-example-exe", "-p", "8000", "--no-access-log", "--no-error-log"]

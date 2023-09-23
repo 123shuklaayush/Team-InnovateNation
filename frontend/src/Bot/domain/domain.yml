@@ -1,0 +1,255 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - Live_Demo
+  - my_name
+  - callback_appointment_reason
+  - my_phone_number
+  - Agent_Handover
+  - Agent_Audio_Call
+  - Agent_Video_Call
+  - Callback
+  - Appointment
+  - email_id
+  - callback_from_requested
+  - appointment_from_requested
+  - agent_handover_form_requested
+  - trigger_quit
+  - what_is
+  - show_main_menu_button
+  - show_main_menu_button_in
+  - trigger_response_selector
+  - greet_in
+  - goodbye_in
+  - affirm_in
+  - deny_in
+  - mood_great_in
+  - mood_unhappy_in
+  - bot_challenge_in
+  - what_is_in
+  - Whatsapp
+
+entities:
+  - first_name
+  - last_name
+  - mobile_number
+  - email
+  - reason
+  - affirm_deny
+  - request_type
+  - time
+  - phone-number
+  - is_whatsapp_enabled
+  - is_web_to_whatsapp_switch_enabled
+  - is_agent_handover_enabled
+  - is_bot_QA_enabled
+  - is_callback_enabled
+  - is_appointment_enabled
+  - bot_id
+  - company_id
+  - retrieval_intent
+
+slots:
+  first_name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: first_name
+
+  last_name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: last_name
+
+  email:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: email
+
+  reason:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: reason
+
+  mobile_number:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: mobile_number
+
+  affirm_deny:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: affirm_deny
+
+  request_type:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: request_type
+
+  time:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: time
+
+  is_whatsapp_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_whatsapp_enabled
+
+  is_web_to_whatsapp_switch_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_web_to_whatsapp_switch_enabled
+
+  is_agent_handover_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_agent_handover_enabled
+
+  is_bot_QA_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_bot_QA_enabled
+
+  is_callback_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_callback_enabled
+
+  is_appointment_enabled:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: is_appointment_enabled
+
+  bot_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: bot_id
+
+  company_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: company_id
+
+  retrieval_intent:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: retrieval_intent
+
+responses:
+  utter_whatsapp:
+    - text: To connect over whatsapp [click here](http://wa.me/+14155238886?text=join%20broke-load) and press enter on whatsapp. Say 'Hi' to start the conversation.
+
+  utter_cheer_up:
+    - text: "Here is something to cheer you up:"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_ask_last_name:
+    - text: Please provide your last name.
+
+  utter_ask_reason:
+    - text: Please provide the purpose.
+
+  utter_ask_mobile_number:
+    - text: Please provide your mobile number.
+
+  utter_ask_email:
+    - text: Please provide your email id.
+
+  utter_ask_time:
+    - text: Please provide your time of appointment.
+
+  utter_ask_affirm_deny:
+    - text: Do you agree to the [terms and conditions](https://www.gruhaautomations.com/)?
+      buttons:
+        - title: "Yes"
+          payload: /affirm{"affirm_deny":"Yes"}
+        - title: "No"
+          payload: /deny{"affirm_deny":"No"}
+
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+  utter_goodbye:
+    - text: "Thanks for chatting with me. Hope i have been of some help. Bye :)"
+
+  utter_iamabot:
+    - text: "I am Your Virtual Law Agent!"
+
+  utter_goodbye_in:
+    - text: "मेरे साथ चैट करने के लिए धन्यवाद. आशा है मुझे कुछ मदद मिली होगी. अलविदा :)"
+
+  utter_iamabot_in:
+    - text: "मैं आपका वर्चुअल लॉ एजेंट हूं!"
+
+  # RASA's default implementation of this resposne to ask user to rephrase, as part of Two Stage Fall back implementation
+  utter_ask_rephrase:
+    - text: I didn't quite understand that. Can you rephrase?
+
+forms:
+  handover_audio_video_form:
+    required_slots:
+      - first_name
+      - last_name
+      - email
+      - mobile_number
+      - affirm_deny
+
+  callback_form:
+    required_slots:
+      - first_name
+      - last_name
+      - email
+      - mobile_number
+      - reason
+      - affirm_deny
+
+  appointment_form:
+    required_slots:
+      - first_name
+      - last_name
+      - email
+      - mobile_number
+      - reason
+      - time
+      - affirm_deny
+
+actions:
+  - action_initial_options
+  - action_initial_options_in
+  - action_default_fallback
+  - action_default_fallback_in
+  - action_default_ask_affirmation
+  - action_default_ask_affirmation_in
+  - action_trigger_response_selector
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
