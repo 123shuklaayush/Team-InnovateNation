@@ -1,7 +1,46 @@
-.maincontainer{
-    height: 200vh;
-    line-height: 45px;
-}
-section h3{
+/* Add this CSS to your Main.css file */
+
+.maincontainer {
+    height: 500vh;
+  }
+  
+  .image-container {
+    margin: 40px;
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  .latestnews {
+    display: flex;
+    justify-content: space-between; /* Adjust the spacing between columns */
+    margin-top: 200px; /* Adjust the margin as needed */
+    margin-bottom: 100px;
+  }
+  
+  .col1,
+  .col2,
+  .col3 {
+    flex: 1; /* Equal width for all columns */
+    padding: 20px; /* Increase padding for better spacing */
     text-align: center;
-}
+    background-color: white; /* Background color for columns */
+    margin: 40px;
+    border-radius: 8px; /* Rounded corners for columns */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; /* Add transitions for smooth hover effects */
+  }
+  
+  /* Hover effect styles */
+  .col1:hover,
+  .col2:hover,
+  .col3:hover {
+    transform: translateY(-5px); /* Move the column slightly up on hover */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
+    background-color: #fff; /* Change background color on hover */
+  }
+  .latest-news-heading{
+    margin: 100px;
+  }

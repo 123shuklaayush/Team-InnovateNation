@@ -1,3 +1,12 @@
 .list-items li{
     margin-right: 40px;
 }
+/* Header.css */
+.img-logo {
+    width: 70px; /* Adjust the size as per your requirement */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .navbar {
+    max-height: 100px;
+  }
