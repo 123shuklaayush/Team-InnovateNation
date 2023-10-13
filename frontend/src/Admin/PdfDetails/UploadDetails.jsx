@@ -82,8 +82,7 @@ const UploadDetails = () => {
             <TableRow>
               <TableCell>PDF Filename</TableCell>
               <TableCell>Upload Date and Time</TableCell>
-              <TableCell>Download Entire PDF</TableCell>
-              <TableCell>View Summarised PDF</TableCell>
+              <TableCell>Download PDF</TableCell>
               <TableCell>Delete PDF</TableCell>
             </TableRow>
           </TableHead>
@@ -103,15 +102,7 @@ const UploadDetails = () => {
                     Download
                   </Button>
                 </TableCell>
-                <TableCell>
-                  <Button style={{ backgroundColor: "green", color: "white" }}
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleDownloadPDF(pdf.filename)}
-                  >
-                    Download
-                  </Button>
-                </TableCell>
+                
                 <TableCell>
                   <Button style={{ backgroundColor: "#f2483a", color: "white" }}
                     variant="outlined"

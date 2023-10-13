@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const Pdf = require('./pdf'); // Import the Pdf schema (adjust the path as needed)
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -39,7 +42,6 @@ const upload = multer({ storage });
 // Handle file uploads
 app.post('/upload-pdf', upload.single('pdf'), async (req, res) => {
   try {
-    
     const { filename, originalname, path } = req.file;
     const pdf = new Pdf({ filename, originalname, path });
     await pdf.save();
@@ -58,6 +60,27 @@ app.get('/get-pdfs', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Error fetching PDF data.');
+  }
+});
+
+// Serve PDFs for download
+app.get('/download-pdf/:filename', (req, res) => {
+  const { filename } = req.params;
+
+  // Define the path to your PDF files directory
+  const pdfPath = path.join(__dirname, 'uploads', filename);
+
+  // Check if the file exists
+  if (fs.existsSync(pdfPath)) {
+    // Set the Content-Disposition header to trigger the download
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-Type', 'application/pdf');
+
+    // Stream the file to the response
+    const fileStream = fs.createReadStream(pdfPath);
+    fileStream.pipe(res);
+  } else {
+    res.status(404).send('PDF not found');
   }
 });
 

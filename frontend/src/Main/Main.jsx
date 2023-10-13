@@ -2,12 +2,9 @@ import React, { useRef, useState } from 'react';
 // Import Swiper React components
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import "./Main.css";
 import docsImage from '../image/docsImage-removebg-preview.png';
 import botImage from '../image/botImage-removebg-preview.png';
-import nerImage from '../image/nerImage-removebg-preview.png';
 import userImage from '../image/userLogo-removebg-preview.png';
 import banner from '../image/Screenshot 2023-09-26 015743.png';
 

@@ -11,13 +11,15 @@ const PdfViewer = () => {
 
   useEffect(() => {
     // Send a GET request to retrieve the PDF content based on the ID
-    axios.get(`/pdf/${id}`, { responseType: 'arraybuffer' })
+    axios.get(`/download-pdf/${id}`, { responseType: 'arraybuffer' })
       .then((response) => {
-        const base64 = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-        setPdfContent(`data:application/pdf;base64,${base64}`);
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        setPdfContent(url);
       })
       .catch((error) => {
         console.error('Error fetching PDF:', error);
+        // Handle the error, e.g., show an error message to the user
       });
   }, [id]);
 
@@ -28,6 +30,7 @@ const PdfViewer = () => {
           <Page pageNumber={1} />
         </Document>
       )}
+      {!pdfContent && <p>Loading PDF...</p>}
     </div>
   );
 };
