@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const UserDetailsContainer = styled('div')({
+const UserDetailsContainer = styled(Container)({
   maxWidth: '600px',
   margin: '0 auto',
   padding: '20px',
@@ -13,21 +19,33 @@ const UserDetailsContainer = styled('div')({
   borderRadius: '5px',
   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   textAlign: 'center',
+  marginTop: '20px',
 });
 
-const UserDetailsHeader = styled('h2')({
+const UserDetailsHeader = styled(Typography)({
   color: '#333',
+  marginBottom: '20px',
 });
 
-const UserDetailsText = styled('p')({
-  margin: '5px 0',
+const FileUploadContainer = styled('div')({
+  display: 'flex',
+  alignItems: 'flex-start', // Keep the file upload on the left
+  justifyContent: 'space-between',
+  marginTop: '20px',
+  width: '100%', // Ensure full-width
 });
 
-const UploadButton = styled(Button)({
-  marginTop: '10px',
+const FileUploadButton = styled(Button)({
+  margin: '0 auto', // Center the upload button
+  display: 'block', // Ensure it's a block-level element
+  marginTop: '10px', // Adjusted margin for spacing
 });
 
-const SuccessMessage = styled('p')({
+const UploadText = styled(Typography)({
+  fontSize: '1.2rem',
+});
+
+const SuccessMessage = styled(MuiAlert)({
   color: 'green',
   marginTop: '10px',
 });
@@ -66,6 +84,16 @@ const ClientAccess = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const handleUploadClick = () => {
     if (isPDFSelected) {
       const form = new FormData();
@@ -84,6 +112,7 @@ const ClientAccess = () => {
         .then((response) => {
           if (response.status === 200) {
             setUploadSuccess(true);
+            setOpen(true);
           } else {
             console.error('Error uploading file to the server. Status:', response.status);
           }
@@ -98,51 +127,68 @@ const ClientAccess = () => {
 
   return (
     <UserDetailsContainer>
-      <UserDetailsHeader>User Data Submission</UserDetailsHeader>
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={formData.username}
-        onChange={handleInputChange}
-      />
-      <input
-        type="text"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleInputChange}
-      />
-      <input
-        type="text"
-        name="address"
-        placeholder="Address"
-        value={formData.address}
-        onChange={handleInputChange}
-      />
-      <input
-        type="text"
-        name="phoneNumber"
-        placeholder="Phone Number"
-        value={formData.phoneNumber}
-        onChange={handleInputChange}
-      />
-
-      <UploadButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-        Upload File
-        <input type="file" onChange={handleFileInputChange} style={{ display: 'none' }} />
-      </UploadButton>
-      {selectedFileName && (
-        <UserDetailsText>Selected File: {selectedFileName}</UserDetailsText>
-      )}
-
-      <div style={{ marginTop: '10px' }}>
+      <UserDetailsHeader variant="h4">User Data Submission</UserDetailsHeader>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <TextField
+            name="username"
+            label="Username"
+            fullWidth
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            name="email"
+            label="Email"
+            fullWidth
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="address"
+            label="Address"
+            fullWidth
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="phoneNumber"
+            label="Phone Number"
+            fullWidth
+            value={formData.phoneNumber}
+            onChange={handleInputChange}
+          />
+        </Grid>
+      </Grid>
+      <FileUploadContainer>
+        <label>
+          <UploadText variant="h5">Upload Text File:</UploadText>
+          <input type="file" onChange={handleFileInputChange} style={{ display: 'none' }} />
+          <FileUploadButton variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+            Upload File
+          </FileUploadButton>
+        </label>
+        {selectedFileName && (
+          <Typography variant="body1">Selected File: {selectedFileName}</Typography>
+        )}
+      </FileUploadContainer>
+      <div style={{ marginTop: '20px' }}>
         {isPDFSelected && (
           <Button variant="contained" onClick={handleUploadClick}>
             Upload
           </Button>
         )}
-        {uploadSuccess && <SuccessMessage>Upload Successful</SuccessMessage>}
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <SuccessMessage onClose={handleClose} severity="success">
+            Upload Successful
+          </SuccessMessage>
+        </Snackbar>
       </div>
     </UserDetailsContainer>
   );
