@@ -6,8 +6,11 @@ import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import "./listItems.css";
 
 export const mainListItems = (
+  <div className="list-item-container">
+    
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>
@@ -29,9 +32,12 @@ export const mainListItems = (
     </ListItemButton>
     
   </React.Fragment>
+  </div>
 );
 
 export const secondaryListItems = (
+  <div className="list-item-container">
+
   <React.Fragment>
     <ListSubheader component="div" inset>
       OnGoing Cases
@@ -50,4 +56,5 @@ export const secondaryListItems = (
     </ListItemButton>
 
   </React.Fragment>
+  </div>
 );

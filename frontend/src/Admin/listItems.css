@@ -1,0 +1,10 @@
+/* listItems.css */
+.list-item-container {
+    /* Your existing styles for list items */
+  
+    /* Add a hover effect */
+    transition: background-color 0.9s; /* Smooth transition on hover */
+  }
+  .list-item-container .MuiListItemButton-root:hover {
+    background-color: #87cefa; /* Change the background color on hover */
+  }

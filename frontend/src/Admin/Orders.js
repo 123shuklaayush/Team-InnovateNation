@@ -16,42 +16,32 @@ const rows = [
   createData(
     '0a3b281a991',
     '16 Mar, 2019',
-    '26 Sep 2023',
     'Elvis Presley',
-    'ABC',
-    'XYZ',
+    
   ),
   createData(
     '00b12900ch8',
     '20 December, 2022',
-    '28 October, 2023',
     'Paul McCartney',
-    'ABC',
-    'XYZ',
+  
   ),
   createData(
     'b803cal91181',
     '16 January, 2020',
-    '24 September 2023',
     'Tom Scholz',
-    'ABC',
-    'XYZ',
+  
   ),
   createData(
     '1b8c9052885c',
     '11 May, 2019',
-    '30 September, 2023',
     'Michael Jackson',
-    'ABC',
-    'XYZ',
+  
   ),
   createData(
     '1c982541b89c',
     '15 Mar, 2019',
-    '4 October, 2023',
     'Bruce Springsteen',
-    'ABC',
-    'XYZ',
+  
   ),
 ];
 
@@ -87,10 +77,9 @@ export default function Orders() {
           <TableRow>
             <TableCell style={cellStyle}>ID_No</TableCell>
             <TableCell style={cellStyle}>Starting Date</TableCell>
-            <TableCell style={cellStyle}>Next Hearing Date</TableCell>
             <TableCell style={cellStyle}>Client's Name</TableCell>
-            <TableCell style={cellStyle}>Lawyer's Name</TableCell>
-            <TableCell style={cellStyle}>Judge's Name</TableCell>
+            <TableCell style={cellStyle}>Download Data</TableCell>
+            
           </TableRow>
         </TableHead>
         <TableBody>
