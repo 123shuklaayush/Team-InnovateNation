@@ -1,72 +1,66 @@
-import * as React from 'react';
-import OtherLink from '@mui/material/Link';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import { Link } from 'react-router-dom';
-// Generate Order Data
-function createData(id, startingdate, nextHearing, name, judge, lawyer) {
-  return { id, startingdate, nextHearing, name, judge, lawyer };
-}
+import Button from '@mui/material/Button'; // Import Button from Material-UI
+import axios from 'axios';
 
-const rows = [
-  createData(
-    '0a3b281a991',
-    '16 Mar, 2019',
-    'Elvis Presley',
-    
-  ),
-  createData(
-    '00b12900ch8',
-    '20 December, 2022',
-    'Paul McCartney',
-  
-  ),
-  createData(
-    'b803cal91181',
-    '16 January, 2020',
-    'Tom Scholz',
-  
-  ),
-  createData(
-    '1b8c9052885c',
-    '11 May, 2019',
-    'Michael Jackson',
-  
-  ),
-  createData(
-    '1c982541b89c',
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-  
-  ),
-];
+const Orders = () => {
+  const [pdfData, setPdfData] = useState([]);
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+  useEffect(() => {
+    // Fetch PDF data from your server
+    axios.get('http://localhost:5000/get-pdf-data')
+      .then((response) => {
+        setPdfData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching PDF data:', error);
+      });
+  }, []);
 
-export default function Orders() {
   const rowStyle = {
-    cursor: 'pointer', // Make the cursor a pointer
-    height: '3rem',    // Increase the row height
-    transition: 'background-color 0.3s', // Add a smooth transition for background color
+    cursor: 'pointer',
+    height: '3rem',
+    transition: 'background-color 0.3s',
   };
 
   const cellStyle = {
-    fontSize: '1rem',  // Optionally, you can adjust the font size of the cells
+    fontSize: '1rem',
   };
 
   const handleRowHover = (event) => {
     event.currentTarget.style.backgroundColor = 'lightSkyBlue';
   };
 
-  // Define a function to handle removing the hover effect
   const handleRowHoverExit = (event) => {
-    event.currentTarget.style.backgroundColor = ''; // Revert to the default background color
+    event.currentTarget.style.backgroundColor = '';
+  };
+
+  const shortenID = (id, length) => {
+    return id.slice(-length);
+  };
+
+  const shortenEmail = (email, maxLength) => {
+    if (email.length > maxLength) {
+      return email.substring(0, maxLength) + '...';
+    }
+    return email;
+  };
+
+  const handleDelete = (pdfDocument) => {
+    // Send a DELETE request to delete the PDF data
+    axios.delete(`http://localhost:5000/delete-pdf/${pdfDocument._id}`)
+      .then(() => {
+        // After successful deletion, refresh the data
+        setPdfData(pdfData.filter(item => item._id !== pdfDocument._id));
+      })
+      .catch((error) => {
+        console.error('Error deleting PDF data:', error);
+      });
   };
 
   return (
@@ -76,40 +70,61 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell style={cellStyle}>ID_No</TableCell>
-            <TableCell style={cellStyle}>Starting Date</TableCell>
-            <TableCell style={cellStyle}>Client's Name</TableCell>
+            <TableCell style={cellStyle}>Username</TableCell>
+            <TableCell style={cellStyle}>Document Name</TableCell>
+            <TableCell style={cellStyle}>Email</TableCell>
+            <TableCell style={cellStyle}>Phone Number</TableCell>
+            <TableCell style={cellStyle}>Created At</TableCell>
             <TableCell style={cellStyle}>Download Data</TableCell>
-            
+            <TableCell style={cellStyle}>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {pdfData.map((pdfDocument) => (
             <TableRow
-              key={row.id}
+              key={pdfDocument._id}
               style={rowStyle}
               onMouseEnter={handleRowHover}
               onMouseLeave={handleRowHoverExit}
             >
               <TableCell style={cellStyle}>
-                <Link
-                  to={`/details/${row.id}?name=${row.name}&date=${row.startingdate}&nextDate=${row.nextHearing}&lawyer=${row.lawyer}&judge=${row.judge}`}
+                <a href={`http://localhost:5000/download-document/${pdfDocument.filename}`}>
+                  {shortenID(pdfDocument._id, 6)} {/* Adjust the length as needed */}
+                </a>
+              </TableCell>
+              <TableCell style={cellStyle}>{pdfDocument.username}</TableCell>
+              <TableCell style={cellStyle}>{pdfDocument.originalname}</TableCell>
+              <TableCell style={cellStyle} title={pdfDocument.email}>
+                {shortenEmail(pdfDocument.email, 20)} {/* Adjust the maxLength as needed */}
+              </TableCell>
+              <TableCell style={cellStyle}>{pdfDocument.phoneNumber}</TableCell>
+              <TableCell style={cellStyle}>
+                {new Date(pdfDocument.createdAt).toLocaleString()}
+              </TableCell>
+              <TableCell style={cellStyle}>
+                <a
+                  href={`http://localhost:5000/download-document/${pdfDocument.filename}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {row.id}
-                </Link>
-                </TableCell>
-              <TableCell style={cellStyle}>{row.startingdate}</TableCell>
-              <TableCell style={cellStyle}>{row.nextHearing}</TableCell>
-              <TableCell style={cellStyle}>{row.name}</TableCell>
-              <TableCell style={cellStyle}>{row.judge}</TableCell>
-              <TableCell style={cellStyle}>{row.lawyer}</TableCell>
-
+                  <Button variant="contained" color="primary">Download</Button>
+                </a>
+              </TableCell>
+              <TableCell style={cellStyle}>
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: '#f66161', color: '#fff' }}
+                  onClick={() => handleDelete(pdfDocument)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <OtherLink color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        Edit Cases
-      </OtherLink>
     </React.Fragment>
   );
-}
+};
+
+export default Orders;

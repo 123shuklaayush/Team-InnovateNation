@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 
 const UserDetailsContainer = styled('div')({
   maxWidth: '600px',
@@ -37,6 +37,12 @@ const ClientAccess = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isPDFSelected, setIsPDFSelected] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    address: '',
+    phoneNumber: '',
+  });
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -55,16 +61,26 @@ const ClientAccess = () => {
     }
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleUploadClick = () => {
     if (isPDFSelected) {
-      const formData = new FormData();
-      formData.append('pdf', selectedFile);
+      const form = new FormData();
+      form.append('pdf', selectedFile);
+      form.append('username', formData.username);
+      form.append('email', formData.email);
+      form.append('address', formData.address);
+      form.append('phoneNumber', formData.phoneNumber);
 
-      axios.post('http://localhost:5000/upload-pdf', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      axios
+        .post('http://localhost:5000/submit-user-data', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
         .then((response) => {
           if (response.status === 200) {
             setUploadSuccess(true);
@@ -81,20 +97,40 @@ const ClientAccess = () => {
   };
 
   return (
-    <UserDetailsContainer>      
-      <UserDetailsText>Name: Elvis Presley</UserDetailsText>
-      <UserDetailsText>Starting Date: 16 Mar, 2019</UserDetailsText>
-      <UserDetailsText>Next Hearing Date: 26 Sep 2023</UserDetailsText>
-      <UserDetailsText>Lawyer: XYZ</UserDetailsText>
-      <UserDetailsText>Judge: ABC</UserDetailsText>
-      
+    <UserDetailsContainer>
+      <UserDetailsHeader>User Data Submission</UserDetailsHeader>
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        value={formData.username}
+        onChange={handleInputChange}
+      />
+      <input
+        type="text"
+        name="email"
+        placeholder="Email"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
+      <input
+        type="text"
+        name="address"
+        placeholder="Address"
+        value={formData.address}
+        onChange={handleInputChange}
+      />
+      <input
+        type="text"
+        name="phoneNumber"
+        placeholder="Phone Number"
+        value={formData.phoneNumber}
+        onChange={handleInputChange}
+      />
+
       <UploadButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
         Upload File
-        <input
-          type="file"
-          onChange={handleFileInputChange}
-          style={{ display: 'none' }}
-        />
+        <input type="file" onChange={handleFileInputChange} style={{ display: 'none' }} />
       </UploadButton>
       {selectedFileName && (
         <UserDetailsText>Selected File: {selectedFileName}</UserDetailsText>
@@ -106,16 +142,8 @@ const ClientAccess = () => {
             Upload
           </Button>
         )}
-        {uploadSuccess && (
-          <SuccessMessage>Upload Successful</SuccessMessage>
-        )}
+        {uploadSuccess && <SuccessMessage>Upload Successful</SuccessMessage>}
       </div>
-
-      <Link to="/client-documents" style={{ marginTop: '10px', display: 'block' }}>
-        <Button variant="contained" color="primary">
-          View Uploaded Documents
-        </Button>
-      </Link>
     </UserDetailsContainer>
   );
 };

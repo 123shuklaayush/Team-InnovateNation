@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.9",
@@ -23,6 +24,7 @@
     "recharts": "^2.8.0",
     "styled-components": "^6.0.8",
     "swiper": "^10.3.0",
+    "typescript": "^5.2.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
