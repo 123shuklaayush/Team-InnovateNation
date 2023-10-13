@@ -1,7 +1,9 @@
 /* Add this CSS to your Main.css file */
-
-.maincontainer {
-    height: 500vh;
+.main-container {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
   
   .image-container {

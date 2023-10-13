@@ -1,6 +1,7 @@
 import React from 'react'
-import banner1 from "../image/2022111451.jpg"
-import banner2 from "../image/20221011100.png"
+import banner1 from "../image/template1.jpg"
+import banner2 from "../image/template2.jpg"
+import banner3 from "../image/template3.jpg";
 const ImageTemp = () => {
     return (
         <>
@@ -11,6 +12,9 @@ const ImageTemp = () => {
             </div>
             <div class="carousel-item">
               <img src={banner2} class="d-block w-100" alt="poster-2"/>
+            </div>
+            <div class="carousel-item">
+              <img src={banner3} class="d-block w-100" alt="poster-2"/>
             </div>
                         
           </div>

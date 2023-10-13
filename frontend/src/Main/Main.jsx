@@ -13,24 +13,19 @@ import banner from '../image/Screenshot 2023-09-26 015743.png';
 
 const cardData = [
   {
+    image: botImage,
+    title: "Smart Chatbot Assistance",
+    text: "Get answers to your questions with our intelligent chatbot. It guides you to solutions for the problems you encounter, ensuring a seamless user experience.",
+  },
+  {
     image: docsImage,
     title: "Unified Document Management",
     text: "Access all your documents in one place for streamlined organization and easy retrieval. Simplify document management with our user-friendly platform.",
   },
   {
-    image: nerImage,
-    title: "Effortless Document Summarization",
-    text: "Struggling with lengthy documents? Try our summarization feature. It condenses content, delivering the most impactful points for efficient reading",
-  },
-  {
     image: userImage,
     title: "Secure Login Using Case ID",
     text: "Access your personalized case details with ease using a secure Case ID login provided on your mail. Streamlined, hassle-free access to critical information 24/7.",
-  },
-  {
-    image: botImage,
-    title: "Smart Chatbot Assistance",
-    text: "Get answers to your questions with our intelligent chatbot. It guides you to solutions for the problems you encounter, ensuring a seamless user experience.",
   },
 ];
 
@@ -44,10 +39,11 @@ const cardImageStyle = {
 const Main = () => {
   return (
     <div>
-      <div className="row row-cols-1 row-cols-md-4 g-4" style={{ padding: "40px"}}>
+    <div className='main-container'>
+      <div className="row row-cols-1 row-cols-md-3 g-1" style={{ padding: "40px"}}>
         {cardData.map((card, index) => (
           <div className="col" key={index} style={{ display:"flex", justifyContent:"center" }}>
-            <div className="card" style={{ width: '18rem' }}>
+            <div className="card" style={{ width: '18rem', marginBottom: '20px' }}>
               {/* Apply hover effect to the image */}
               <img
                 className="card-img-top"
@@ -65,13 +61,14 @@ const Main = () => {
           </div>
         ))}
       </div>
+    </div>
 
       <div className="image-container">
         <img src={banner} alt="imagebanner" width={"100%"}/>
       </div>
 
       <div className="latestnews">
-      <h4 className='latest-news-heading'>Latest News</h4>
+      <h4 className='latest-news-heading'>Latest Reports</h4>
         
         <div className="col1">
           <p>

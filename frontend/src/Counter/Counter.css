@@ -1,0 +1,51 @@
+/* Add this CSS to your Counter.css file */
+
+.customer-review {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    color: #6db83e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .happyCustomer,
+  .awardWinning,
+  .insurance-claimed {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .number {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 5px 0;
+    transform: scale(0.8); /* Start with a smaller size */
+    transition: transform 0.5s;
+    animation: pulse 2s infinite;
+  }
+  
+  .review-heading {
+    font-size: 20px;
+    color: #a7c2cc;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Add pulsating animation for numbers that go over the target */
+  .number.pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1.0);
+    }
+  }
+  

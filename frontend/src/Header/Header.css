@@ -1,11 +1,26 @@
-.list-items li{
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');.list-items li{
     margin-right: 40px;
 }
 /* Header.css */
 .img-logo {
-    width: 70px; /* Adjust the size as per your requirement */
+    width: 130px; /* Adjust the size as per your requirement */
     height: auto; /* Maintain aspect ratio */
   }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  
+  .orgname {
+    color: green;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    letter-spacing: 8px;
+    animation: fadeIn 1.5s;
+  }
+  
   
   .navbar {
     max-height: 100px;
