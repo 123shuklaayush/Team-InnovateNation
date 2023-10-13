@@ -82,4 +82,4 @@ policies:
   core_fallback_threshold: 0.7
   core_fallback_action_name: "action_default_fallback"
   enable_fallback_prediction: true
-assistant_id: 20230923-230812-navy-vibes
+assistant_id: 20231013-232128-radiant-stream

@@ -22,38 +22,37 @@ class ActionDefaultAskAffirmation(Action):
         # select the top three intents from the tracker
         # ignore the first one -- nlu fallback
         predicted_intents = tracker.latest_message["intent_ranking"][1:4]
-        print('predicted_intents are----->', predicted_intents)
+        print("predicted_intents are----->", predicted_intents)
         # A prompt asking the user to select an option
         message = "Sorry! What do you want to do?"
         # a mapping between intents and user friendly wordings
         intent_mappings = {
-            "what_is": "What is Law Guide?",
+            "what_is": "What is OpenArms?",
             "Agent": "Use of Bot?",
             "Help": "Customer Care",
         }
         # show the top three intents as buttons to the user
         buttons = [
             {
-                "title": intent_mappings['what_is'],
-                "payload": '/trigger_response_selector{"retrieval_intent":"what_is/About"}'
+                "title": intent_mappings["what_is"],
+                "payload": '/trigger_response_selector{"retrieval_intent":"what_is/About"}',
             },
             {
-                "title": intent_mappings['Agent'],
-                "payload":'/trigger_response_selector{"retrieval_intent":"what_is/use_of_bot"}'
+                "title": intent_mappings["Agent"],
+                "payload": '/trigger_response_selector{"retrieval_intent":"what_is/use_of_bot"}',
             },
             {
-                "title": intent_mappings['Help'],
-                "payload": '/trigger_response_selector{"retrieval_intent":"what_is/About_Articles"}'
-            }
+                "title": intent_mappings["Help"],
+                "payload": '/trigger_response_selector{"retrieval_intent":"what_is/About_Articles"}',
+            },
         ]
         # add a "none of these button", if the user doesn't
         # agree when any suggestion
-        buttons.append({
-            "title": "None of These",
-            "payload": "/out_of_scope"})
+        buttons.append({"title": "None of These", "payload": "/out_of_scope"})
 
         dispatcher.utter_message(text=message, buttons=buttons)
         return []
+
 
 # Ultimate / Final fall back action as part Two Stage Fall back feature of RASA
 
@@ -63,16 +62,11 @@ class ActionDefaultFallback(Action):
         return "action_default_fallback"
 
     async def run(self, dispatcher, tracker, domain):
-
         # tell the user they are being passed to a customer service agent
         message = "I am sorry, I can't help you. "
-        intent_mappings = {
-            "Agent": "AGENT"
-        }
-        buttons = [ {
-                "title": intent_mappings['Agent'],
-                "payload": "https://www.google.com"
-            }
+        intent_mappings = {"Agent": "AGENT"}
+        buttons = [
+            {"title": intent_mappings["Agent"], "payload": "https://www.google.com"}
         ]
         dispatcher.utter_message(text=message, buttons=buttons)
 

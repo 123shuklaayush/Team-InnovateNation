@@ -31,14 +31,14 @@ class WhatsAppOutput(WhatsApp, OutputChannel):
         return "whatsapp"
 
     def __init__(
-        self,
-        auth_token: Optional[Text],
-        phone_number_id: Optional[Text],
+            self,
+            auth_token: Optional[Text],
+            phone_number_id: Optional[Text],
     ) -> None:
         super().__init__(auth_token, phone_number_id=phone_number_id)
 
     async def send_text_message(
-        self, recipient_id: Text, text: Text, **kwargs: Any
+            self, recipient_id: Text, text: Text, **kwargs: Any
     ) -> None:
         """Sends text message"""
 
@@ -46,34 +46,33 @@ class WhatsAppOutput(WhatsApp, OutputChannel):
             self.send_message(message_part, recipient_id=recipient_id)
 
     async def send_text_with_buttons(
-        self,
-        recipient_id: Text,
-        text: Text,
-        buttons: List[Dict[Text, Any]],
-        **kwargs: Any,
+            self,
+            recipient_id: Text,
+            text: Text,
+            buttons: List[Dict[Text, Any]],
+            **kwargs: Any,
     ) -> None:
         """Sends text message with buttons"""
         buttons_list = []
         for button in buttons:
             buttons_list.append({
-                        "type": "reply",
-                        "reply": {
-                            "id": button.get("payload"),
-                            "title": button.get("title")
-                        }
-                    })
+                "type": "reply",
+                "reply": {
+                    "id": button.get("payload"),
+                    "title": button.get("title")
+                }
+            })
 
         button_dict = {"type": "button", "body": {
-                "text": text},
-                "action": {
-                    "buttons": buttons_list
-                }
-            }
+            "text": text},
+                       "action": {
+                           "buttons": buttons_list
+                       }
+                       }
         self.send_reply_button(button=button_dict, recipient_id=recipient_id)
 
-
     async def send_image_url(
-        self, recipient_id: Text, image: Text, **kwargs: Any
+            self, recipient_id: Text, image: Text, **kwargs: Any
     ) -> None:
         """Sends an image."""
 
@@ -103,6 +102,12 @@ class WhatsAppOutput(WhatsApp, OutputChannel):
         """Sends the Location"""
         self.send_location(location, recipient_id=recipient_id)
 
+    async def send_custom_json_message(
+        self, recipient_id: Text, json_message: Dict[Text, Any], **kwargs: Any
+    ) -> None:
+        """Sends a custom JSON message"""
+        self.send_message(json_message, recipient_id=recipient_id)
+
 class WhatsAppInput(InputChannel):
     """WhatsApp Cloud API input channel"""
 
@@ -122,28 +127,29 @@ class WhatsAppInput(InputChannel):
         )
 
     def __init__(
-        self,
-        auth_token: Optional[Text],
-        phone_number_id: Optional[Text],
-        verify_token: Optional[Text],
-        debug_mode: bool = True,
+            self,
+            auth_token: Optional[Text],
+            phone_number_id: Optional[Text],
+            verify_token: Optional[Text],
+            debug_mode: bool = True,
     ) -> None:
         self.auth_token = auth_token
         self.phone_number_id = phone_number_id
         self.verify_token = verify_token
         self.debug_mode = debug_mode
         self.client = WhatsApp(self.auth_token, phone_number_id=self.phone_number_id)
+
     def get_message(self, data):
         message_type = self.client.get_message_type(data)
         if message_type == "interactive":
             response = self.client.get_interactive_response(data)
-            
+
             if response.get("type") == "button_reply":
                 return response.get("button_reply").get("id")
         return self.client.get_message(data)
-    
+
     def blueprint(
-        self, on_new_message: Callable[[UserMessage], Awaitable[Any]]
+            self, on_new_message: Callable[[UserMessage], Awaitable[Any]]
     ) -> Blueprint:
         whatsapp_webhook = Blueprint("whatsapp_webhook", __name__)
 
@@ -157,7 +163,7 @@ class WhatsAppInput(InputChannel):
             print(self.verify_token)
             print(request.args.get("hub.verify_token") == self.verify_token)
             if request.args.get("hub.verify_token") == self.verify_token:
-               return response.text(request.args.get("hub.challenge"))
+                return response.text(request.args.get("hub.challenge"))
             print("Webhook Verification failed")
             logging.error("Webhook Verification failed")
             return "Invalid verification token"
@@ -165,12 +171,13 @@ class WhatsAppInput(InputChannel):
         @whatsapp_webhook.route("/webhook", methods=["POST"])
         async def message(request: Request) -> HTTPResponse:
             sender = self.client.get_mobile(request.json)
-            #logger.debug(request.json)
-            #text = self.client.get_message(request.json) #TODO This will not work for image caption and buttons
-            
+            # logger.debug(request.json)
+            # text = self.client.get_message(request.json)
+            # TODO This will not work for image caption and buttons
+
             text = self.get_message(request.json)
             logger.debug(text)
-            
+
             out_channel = self.get_output_channel()
             if sender is not None and message is not None:
                 metadata = self.get_metadata(request)

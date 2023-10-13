@@ -2,43 +2,30 @@ version: "3.1"
 responses:
    utter_what_is/About:
      - text: |
-         **Law Guide** is your trusted online resource for legal assistance. 
-         Our website offers clients valuable insights into their cases, 
-         including information on upcoming hearings and the current progress of their legal matters.
+         **OpenArms** Your caring companion on the path to mental well-being. 
+         Expert counseling, friendly chatbot, and a virtual assistant, all in one place
        buttons:
          - payload: /show_main_menu_button
            title: "Main Menu"
    utter_what_is/use_of_bot:
      - text: |
-          With our user-friendly interface, clients can easily navigate to discover the articles , case categories relevant to their needs, 
-          providing them with essential guidance on the appropriate legal steps to take.
+          Experience seamless support with our OpenArms chatbot. 
+          Instant responses, compassionate guidance, and a helping hand whenever you need it.
        buttons:
          - payload: /show_main_menu_button
            title: "Main Menu"
    utter_what_is/About_Articles:
      - text: |
-         Please Choose the below option
-       buttons:
-         - payload: /trigger_response_selector{"retrieval_intent":"what_is/LLM_AGENT"}
-           title: "Virtual_agent"
-         - payload: /show_main_menu_button
-           title: "Main Menu"
-   utter_what_is/Customer Care:
-     - text: |
-          For more information, you can call us +91 786-594-3323 or write us to lawguide@govt.com
-         
-          
-          or you can reach to us through our whatsapp "+91 6281-733-899"
-       buttons:
-         - payload: /show_main_menu_button
-           title: "Main Menu"
-   utter_what_is/LLM_AGENT:
-     - text: |
-           Please click on the link below to get in touch with our agent
+           Please click on the link below to get in touch with our virtual agent
            
            
            url : "http://localhost:8501"
-
+   utter_what_is/Customer Care:
+     - text: |
+          For more information, you can call us +91 786-594-3323 or write us to OpenArmsCounseling@gmail.com
+         
+          
+          or you can reach to us through our whatsapp "+91 6281-733-899"
        buttons:
          - payload: /show_main_menu_button
            title: "Main Menu"

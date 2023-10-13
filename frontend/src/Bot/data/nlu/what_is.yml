@@ -2,57 +2,42 @@ version: "3.1"
 nlu:
 - intent: what_is/About
   examples: |
-    - What is a Law Guide?
-    - Can you provide information about Law Guides?
-    - Tell me about the purpose of a Law Guide.
-    - What is the function of a Law Guide?
-    - Explain the concept of a Law Guide.
-    - What does a Law Guide typically contain?
-    - Why might someone need a Law Guide?
-    - How can a Law Guide be helpful?
-    - Could you describe the importance of a Law Guide?
-    - Give me an overview of what a Law Guide is.
-    - Tell me about Law Guide
-    - Law Guide ?
+    - What's the scoop on OpenArms?
+    - Can you brief me about OpenArms?
+    - Tell me what OpenArms is about.
+    - Give me the lowdown on OpenArms.
+    - What's the story with OpenArms?
+    - Explain OpenArms to me.
+    - What can you tell me about OpenArms?
+    - I'm curious about OpenArms. What is it?
+    - Could you give me a quick overview of OpenArms?
+    - What's the deal with OpenArms?
+    - OpenArms ?
 - intent: what_is/use_of_bot
   examples: |
-    - How can a Law Guide Bot be utilized?
-    - What purposes does a Law Guide Bot serve?
-    - What is the practical application of a Law Guide Bot?
-    - What can you do with a Law Guide Bot?
-    - How does a Law Guide Bot assist users?
-    - In what ways is a Law Guide Bot helpful?
-    - What are the functions of a Law Guide Bot?
-    - How do people make use of a Law Guide Bot?
-    - What are the benefits of using a Law Guide Bot?
-    - What's the role of a Law Guide Bot in legal matters?
-    - What is use of Law Guide Bot
-    - Bot
-    - Law Guide Bot
+    - What does OpenArms Bot do?
+    - What's the purpose of OpenArms Bot?
+    - How is OpenArms Bot used?
+    - Can you explain OpenArms Bot's function?
+    - What benefits does OpenArms Bot offer?
+    - Tell me about OpenArms Bot's utility.
+    - What's the role of OpenArms Bot?
+    - How can OpenArms Bot be helpful?
+    - What's the use of OpenArms Bot?
+    - Explain the function of OpenArms Bot.
+    - OpenArms Bot ?
+    - Bot ?
 - intent: what_is/About_Articles
   examples: |
-    - How can I discover categories of legal articles and cases?
-    - What's the method for finding legal article and case categories?
-    - How do I access categorized legal articles and cases?
-    - Where can I get information on legal article and case classifications?
-    - What's the way to learn about the categories of legal articles and cases?
-    - How can I explore legal article and case topics?
-    - Where should I look to find categories for legal articles and cases?
-    - What's the process for identifying legal article and case classifications?
-    - How do I become aware of the categories of legal articles and cases?
-    - What resources can help me find legal article and case categories?
-    - How to know about Articles and Case categories
-    - Articles and Case categories ?
-- intent: what_is/LLM_AGENT
-  examples: |
-    - Can you activate the  agent?
-    - How do I trigger the  agent?
-    - Start the  agent, please.
-    - Initiate the agent.
-    - Launch the agent.
-    - Commence the  agent.
-    - Get the  agent running.
-    - Begin the  agent.
-    - Fire up the agent.
-    - Enable the  agent.
+    - How can I access the Virtual Agent?
+    - Connect me with the Virtual Agent, please.
+    - I need to speak with the Virtual Agent.
+    - Can you put me through to the Virtual Agent?
+    - Help me connect with the Virtual Agent.
+    - How do I chat with the Virtual Agent?
+    - Please link me to the Virtual Agent.
+    - I require assistance from the Virtual Agent.
+    - Connect me to your automated assistant.
+    - Let me talk to the Virtual Agent now.
+
 

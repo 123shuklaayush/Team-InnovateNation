@@ -1,11 +1,10 @@
 import React from 'react'
 import Header from '../Header/Header';
 import ImageTemp from '../ImageTemplate/ImageTemp';
-import ChatBotComponent from '../Bot/ChatBotComponent';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Counter from '../Counter/Counter';
-
+import ChabotComponent from '../Bot/ChatBotComponent'
 const Home = () => {
   return (
     <div>
@@ -13,7 +12,7 @@ const Home = () => {
       <ImageTemp/>
       <Counter/>
       <Main/>
-      <ChatBotComponent/>
+      <ChabotComponent/>
       <Footer/>
     </div>
   )
