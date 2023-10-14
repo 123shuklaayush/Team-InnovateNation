@@ -3,9 +3,9 @@ import React, { useRef, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "./Main.css";
-import docsImage from '../image/docsImage-removebg-preview.png';
+import docsImage from '../image/botimg-removebg-preview.png';
 import botImage from '../image/botImage-removebg-preview.png';
-import userImage from '../image/userLogo-removebg-preview.png';
+import userImage from '../image/userlg-removebg-preview.png';
 import banner from '../image/Screenshot 2023-09-26 015743.png';
 
 const cardData = [
@@ -16,20 +16,21 @@ const cardData = [
   },
   {
     image: docsImage,
-    title: "Unified Document Management",
-    text: "Access all your documents in one place for streamlined organization and easy retrieval. Simplify document management with our user-friendly platform.",
+    title: "Your Virtual Counsellor",
+    text: "a virtual mental health counseling agent, providing accessible, confidential support for individuals seeking guidance and emotional well-being.",
   },
   {
     image: userImage,
-    title: "Secure Login Using Case ID",
-    text: "Access your personalized case details with ease using a secure Case ID login provided on your mail. Streamlined, hassle-free access to critical information 24/7.",
+    title: "Secure Login",
+    text: "Secure login website offers user registration, password encryption, multi-factor authentication, and session management for a safe and user-friendly experience.",
   },
 ];
 
 const cardImageStyle = {
   width: '100%',
   height: '200px',
-  objectFit: 'cover',
+  top: '10px',
+  objectFit: 'contain',
   transition: 'filter 0.3s ease', // Add transition for smooth effect
 };
 

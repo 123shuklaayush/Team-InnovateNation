@@ -14,11 +14,6 @@ import ClientDocuments from './Client/ClientDocuments';
 
 function App() {
   return (
-    <Auth0Provider
-      domain="your-auth0-domain"
-      clientId="your-client-id"
-      redirectUri={window.location.origin}
-    >
       <Router>
         <div className="App">
           <Routes>
@@ -32,7 +27,6 @@ function App() {
           </Routes>
         </div>
       </Router>
-    </Auth0Provider>
   );
 }
 

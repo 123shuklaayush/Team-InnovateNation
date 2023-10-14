@@ -11,42 +11,47 @@ import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const UserDetailsContainer = styled(Container)({
+const ContainerStyled = styled(Container)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
   maxWidth: '600px',
-  margin: '0 auto',
-  padding: '20px',
-  backgroundColor: '#f5f5f5',
+  margin: 'auto',
+  padding: '30px',
+  backgroundColor: '#f2f2f2',
   borderRadius: '5px',
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  textAlign: 'center',
-  marginTop: '20px',
+  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
 });
 
-const UserDetailsHeader = styled(Typography)({
+const FormStyled = styled('form')({
+  width: '100%',
+});
+
+const TypographyStyled = styled(Typography)({
   color: '#333',
   marginBottom: '20px',
+  textAlign: 'center',
+  fontSize: '24px',
 });
 
-const FileUploadContainer = styled('div')({
+const DivStyled = styled('div')({
   display: 'flex',
-  alignItems: 'flex-start', // Keep the file upload on the left
-  justifyContent: 'space-between',
+  flexDirection: 'column',
+  alignItems: 'center',
   marginTop: '20px',
-  width: '100%', // Ensure full-width
+  width: '100%',
 });
 
-const FileUploadButton = styled(Button)({
-  margin: '0 auto', // Center the upload button
-  display: 'block', // Ensure it's a block-level element
-  marginTop: '10px', // Adjusted margin for spacing
+const ButtonStyled = styled(Button)({
+  margin: '20px 0',
 });
 
-const UploadText = styled(Typography)({
-  fontSize: '1.2rem',
+const TypographyUpload = styled(Typography)({
+  fontSize: '18px',
+  fontWeight: 'bold',
 });
 
-const SuccessMessage = styled(MuiAlert)({
-  color: 'green',
+const AlertStyled = styled(MuiAlert)({
   marginTop: '10px',
 });
 
@@ -126,71 +131,73 @@ const ClientAccess = () => {
   };
 
   return (
-    <UserDetailsContainer>
-      <UserDetailsHeader variant="h4">User Data Submission</UserDetailsHeader>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <TextField
-            name="username"
-            label="Username"
-            fullWidth
-            value={formData.username}
-            onChange={handleInputChange}
-          />
+    <ContainerStyled>
+      <TypographyStyled variant="h1">Fill the Form to directly talk to our counsellor</TypographyStyled>
+      <FormStyled>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              name="username"
+              label="Username"
+              fullWidth
+              variant="outlined"
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              variant="outlined"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="address"
+              label="Address"
+              fullWidth
+              variant="outlined"
+              value={formData.address}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="phoneNumber"
+              label="Phone Number"
+              fullWidth
+              variant="outlined"
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <TextField
-            name="email"
-            label="Email"
-            fullWidth
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            name="address"
-            label="Address"
-            fullWidth
-            value={formData.address}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            name="phoneNumber"
-            label="Phone Number"
-            fullWidth
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
-          />
-        </Grid>
-      </Grid>
-      <FileUploadContainer>
+      </FormStyled>
+      <DivStyled>
         <label>
-          <UploadText variant="h5">Upload Text File:</UploadText>
+          <TypographyUpload variant="h2">Upload PDF File:</TypographyUpload>
           <input type="file" onChange={handleFileInputChange} style={{ display: 'none' }} />
-          <FileUploadButton variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+          <ButtonStyled variant="contained" component="span" startIcon={<CloudUploadIcon />}>
             Upload File
-          </FileUploadButton>
+          </ButtonStyled>
         </label>
-        {selectedFileName && (
-          <Typography variant="body1">Selected File: {selectedFileName}</Typography>
-        )}
-      </FileUploadContainer>
-      <div style={{ marginTop: '20px' }}>
-        {isPDFSelected && (
-          <Button variant="contained" onClick={handleUploadClick}>
-            Upload
-          </Button>
-        )}
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <SuccessMessage onClose={handleClose} severity="success">
-            Upload Successful
-          </SuccessMessage>
-        </Snackbar>
-      </div>
-    </UserDetailsContainer>
+        {selectedFileName && <Typography variant="body1">Selected File: {selectedFileName}</Typography>}
+      </DivStyled>
+      {isPDFSelected && (
+        <ButtonStyled variant="contained" color="primary" onClick={handleUploadClick}>
+          Upload
+        </ButtonStyled>
+      )}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <AlertStyled onClose={handleClose} severity="success">
+          Upload Successful
+        </AlertStyled>
+      </Snackbar>
+    </ContainerStyled>
   );
 };
 
