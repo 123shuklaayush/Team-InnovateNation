@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import Button from '@mui/material/Button'; // Import Button from Material-UI
+import Button from '@mui/material/Button';
 import axios from 'axios';
 
 const Orders = () => {
@@ -71,10 +71,10 @@ const Orders = () => {
           <TableRow>
             <TableCell style={cellStyle}>ID_No</TableCell>
             <TableCell style={cellStyle}>Username</TableCell>
-            <TableCell style={cellStyle}>Document Name</TableCell>
             <TableCell style={cellStyle}>Email</TableCell>
             <TableCell style={cellStyle}>Phone Number</TableCell>
-            <TableCell style={cellStyle}>Created At</TableCell>
+            <TableCell style={cellStyle}>Date</TableCell>
+            <TableCell style={cellStyle}>Time</TableCell>
             <TableCell style={cellStyle}>Download Data</TableCell>
             <TableCell style={cellStyle}>Delete</TableCell>
           </TableRow>
@@ -89,17 +89,19 @@ const Orders = () => {
             >
               <TableCell style={cellStyle}>
                 <a href={`http://localhost:5000/download-document/${pdfDocument.filename}`}>
-                  {shortenID(pdfDocument._id, 6)} {/* Adjust the length as needed */}
+                  {shortenID(pdfDocument._id, 6)}
                 </a>
               </TableCell>
               <TableCell style={cellStyle}>{pdfDocument.username}</TableCell>
-              <TableCell style={cellStyle}>{pdfDocument.originalname}</TableCell>
               <TableCell style={cellStyle} title={pdfDocument.email}>
-                {shortenEmail(pdfDocument.email, 20)} {/* Adjust the maxLength as needed */}
+                {shortenEmail(pdfDocument.email, 20)}
               </TableCell>
               <TableCell style={cellStyle}>{pdfDocument.phoneNumber}</TableCell>
               <TableCell style={cellStyle}>
-                {new Date(pdfDocument.createdAt).toLocaleString()}
+                {new Date(pdfDocument.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell style={cellStyle}>
+                {new Date(pdfDocument.createdAt).toLocaleTimeString()}
               </TableCell>
               <TableCell style={cellStyle}>
                 <a

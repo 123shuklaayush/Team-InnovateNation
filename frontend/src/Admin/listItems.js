@@ -18,12 +18,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-      <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="File New Case" />
-    </ListItemButton>
+    
     <ListItemButton>
       <ListItemIcon>
         <BarChartIcon />
@@ -40,7 +35,7 @@ export const secondaryListItems = (
 
   <React.Fragment>
     <ListSubheader component="div" inset>
-      OnGoing Cases
+      OnGoing 
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
